@@ -9,6 +9,7 @@ Library to build and manage forms in a CodeIgniter 4 projects (Object-Oriented w
 - [How to use](#how-to-use)
     - [Basic Usage](#basic-usage)
     - [Using a Template](#using-a-template)
+    - [Setting Form Data](#setting-form-data)
 
 ## Instalation & Loading
 
@@ -241,19 +242,85 @@ Output:
 <div class="form-login">
 	<form action="http://localhost:8080/" method="post" accept-charset="utf-8">
 
-	<div class="form-field">
-		<label for="username">Username: </label>
-		<input type="text" name="username" value="">
-	</div>
+        <div class="form-field">
+            <label for="username">Username: </label>
+            <input type="text" name="username" value="">
+        </div>
 
-	<div class="form-field">
-		<label for="password">Password: </label>
-		<input type="password" name="password" value="">
-	</div>
+        <div class="form-field">
+            <label for="password">Password: </label>
+            <input type="password" name="password" value="">
+        </div>
 
-    <div class="form-field">
-		<input type="submit" name="btnLogin" value="Login">
-	</div>
-</form>
+        <div class="form-field">
+            <input type="submit" name="btnLogin" value="Login">
+        </div>
+    </form>
 </div>
+```
+
+### Setting Form Data
+
+You can pass the value of a component in the constructor itself. Like:
+
+```php
+$nameField = new Input('name', 'Michael Jordan'); 
+$nameField->setLabel(new Label('Name: ', 'name'));
+
+$emailField = new Input('email', 'mjordan@nba.com', '', 'email'); //last param is type of input
+$emailField->setLabel(new Label('Email: ', 'email'));
+
+/*
+    Output:
+    <label for="name">Name: </label>
+    <input type="text" name="name" value="Michael Jordan">
+
+    <label for="email">Email: </label>
+    <input type="email" name="email" value="mjordan@nba.com">
+*/
+```
+
+However, it is also possible to pass an `array` or `object` containing the data to be set through the `setFormData` method in `$form` instance. Data can be provide from a model or a request.
+
+```php
+<?php
+
+namespace App\Controllers;
+
+use CI4FormBuilder\Form;
+use CI4FormBuilder\Input;
+use CI4FormBuilder\Label;
+use CI4FormBuilder\Submit;
+
+class Home extends BaseController
+{
+    public function index()
+    {
+        $form = new Form(); 
+
+        //Customers form
+        $firstNameField = new Input('firstname'); /
+        $firstNameField->setLabel(new Label('First Name: ', 'firstName'));
+
+        $lastNameField = new Input('lastname');
+        $lastNameField->setLabel(new Label('Last Name: ', 'lastName'));
+
+        $submitButton = new Submit('btnSave', 'Save');
+
+        //add components to $form
+        $form->addComponent($firstNameField)
+             ->addComponent($lastNameField)
+             ->addComponent($submitButton);
+
+        //set data from db
+        $customerToEdit = model('CustomerModel')->find(1); //an object or array with "firstname" and "lastname" params/keys.
+        $form->setFormData($customerToEdit);
+
+        //to set data from a request
+        $form->setFormData($this->request->getPost());
+
+        //display form
+        echo $form->display();
+    }
+}
 ```

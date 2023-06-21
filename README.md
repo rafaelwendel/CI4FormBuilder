@@ -6,7 +6,9 @@ Library to build and manage forms in a CodeIgniter 4 projects (Object-Oriented w
 
 - [Instalation & Loading](#instalation-&-loading)
 - [Components](#components)
-- [Basic Usage](#basic-usage)
+- [How to use](#how-to-use)
+    - [Basic Usage](#basic-usage)
+    - [Using a Template](#using-a-template)
 
 ## Instalation & Loading
 
@@ -39,7 +41,9 @@ The following form components are available to use.
 - `Textarea`
 - `Upload`
 
-## Basic Usage
+## How to use
+
+### Basic Usage
 
 The cited components can be instantiated and added to a Form.
 
@@ -102,6 +106,7 @@ Another example using more components
 
 namespace App\Controllers;
 
+use CI4FormBuilder\Checkbox;
 use CI4FormBuilder\Dropdown;
 use CI4FormBuilder\Form;
 use CI4FormBuilder\Input;
@@ -168,4 +173,87 @@ Output:
 
     <input type="submit" name="btnSave" value="Save">
 </form>
+```
+### Using a Template
+
+With the `Template` class it is possible to define a default layout for a Form and its components. The following options are available for use
+
+- `beforeForm` : code to insert before the `<form>` tag
+- `afterForm` : code to insert after the `</form>` close tag
+- `beforeComponent` : code to insert before each component
+- `afterComponent` : code to insert after each component
+- `beforeErrorMessage` : code to insert before a component error message (like validation) 
+- `afterErrorMessage` : code to insert after a component error message
+
+Example
+
+```php
+<?php
+
+namespace App\Controllers;
+
+use CI4FormBuilder\Form;
+use CI4FormBuilder\Input;
+use CI4FormBuilder\Label;
+use CI4FormBuilder\Password;
+use CI4FormBuilder\Submit;
+use CI4FormBuilder\Template;
+
+class Home extends BaseController
+{
+    public function index()
+    {
+        $form = new Form();
+
+        //lets set the Template options
+        $template = new Template([
+            'beforeForm' => '<div class="form-login">',
+            'afterForm' => '</div>',
+            'beforeComponent' => '<div class="form-field">',
+            'afterComponent' => '</div>',
+        ]);
+
+        //define the Form template
+        $form->setTemplate($template);
+
+        //create an input to "username"
+        $usernameField = new Input('username'); 
+        $usernameField->setLabel(new Label('Username: ', 'username'));
+
+        //create an input to "password"
+        $passField = new Password('password');
+        $passField->setLabel(new Label('Password: ', 'password'));
+
+        $submitButton = new Submit('btnLogin', 'Login');
+
+        //add components to $form
+        $form->addComponent([$usernameField, $passField, $submitButton]);
+
+        //display form
+        echo $form->display();
+    }
+}
+```
+
+Output:
+
+```html
+<div class="form-login">
+	<form action="http://localhost:8080/" method="post" accept-charset="utf-8">
+
+	<div class="form-field">
+		<label for="username">Username: </label>
+		<input type="text" name="username" value="">
+	</div>
+
+	<div class="form-field">
+		<label for="password">Password: </label>
+		<input type="password" name="password" value="">
+	</div>
+
+    <div class="form-field">
+		<input type="submit" name="btnLogin" value="Login">
+	</div>
+</form>
+</div>
 ```

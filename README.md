@@ -10,6 +10,7 @@ Library to build and manage forms in a CodeIgniter 4 projects (Object-Oriented w
     - [Basic Usage](#basic-usage)
     - [Using a Template](#using-a-template)
     - [Setting Form Data](#setting-form-data)
+    - [Setting Error Messages](#setting-error-messages)
 
 ## Instalation & Loading
 
@@ -283,44 +284,93 @@ $emailField->setLabel(new Label('Email: ', 'email'));
 However, it is also possible to pass an `array` or `object` containing the data to be set through the `setFormData` method in `$form` instance. Data can be provide from a model or a request.
 
 ```php
-<?php
 
-namespace App\Controllers;
+$form = new Form(); 
 
-use CI4FormBuilder\Form;
-use CI4FormBuilder\Input;
-use CI4FormBuilder\Label;
-use CI4FormBuilder\Submit;
+//Customers form
+$firstNameField = new Input('firstname'); /
+$firstNameField->setLabel(new Label('First Name: ', 'firstName'));
 
-class Home extends BaseController
-{
-    public function index()
-    {
-        $form = new Form(); 
+$lastNameField = new Input('lastname');
+$lastNameField->setLabel(new Label('Last Name: ', 'lastName'));
 
-        //Customers form
-        $firstNameField = new Input('firstname'); /
-        $firstNameField->setLabel(new Label('First Name: ', 'firstName'));
+$submitButton = new Submit('btnSave', 'Save');
 
-        $lastNameField = new Input('lastname');
-        $lastNameField->setLabel(new Label('Last Name: ', 'lastName'));
+//add components to $form
+$form->addComponent($firstNameField)
+        ->addComponent($lastNameField)
+        ->addComponent($submitButton);
 
-        $submitButton = new Submit('btnSave', 'Save');
+//set data from db
+$customerToEdit = model('CustomerModel')->find(1); //an object or array with "firstname" and "lastname" params/keys.
+$form->setFormData($customerToEdit);
 
-        //add components to $form
-        $form->addComponent($firstNameField)
-             ->addComponent($lastNameField)
-             ->addComponent($submitButton);
+//to set data from request
+$form->setFormData($this->request->getPost());
 
-        //set data from db
-        $customerToEdit = model('CustomerModel')->find(1); //an object or array with "firstname" and "lastname" params/keys.
-        $form->setFormData($customerToEdit);
+//display form
+echo $form->display();
+```
 
-        //to set data from a request
-        $form->setFormData($this->request->getPost());
+### Setting Error Messages
 
-        //display form
-        echo $form->display();
+To include error messages (usually validation errors), just pass them to the `setErrorsValidation` method. In addition, also configure the template for displaying errors
+
+```php
+
+//define validation rules
+$errors = [];
+$validation = \Config\Services::validation();
+if($this->request->is('post')) {
+    $validation->setRules([
+        'name'    => 'required|min_length[5]',
+        'email'   => 'required|valid_email',
+    ]);
+    if(! $validation->run($this->request->getPost())) {
+        $errors = $validation->getErrors();
     }
 }
+
+$form = new Form();
+
+//set errors messages
+$form->setErrorsValidation($errors);
+
+//Template options to display errors
+$template = new Template([
+    'beforeErrorMessage' => '<span style="color: red">',
+    'afterErrorMessage' => '</span>',
+]);
+
+//define the Form template
+$form->setTemplate($template);
+
+//create an input to "username"
+$nameField = new Input('name'); 
+$nameField->setLabel(new Label('Name: ', 'name'));
+
+//create an input to "email"
+$emailField = new Input('email', '', '', 'email');
+$emailField->setLabel(new Label('Email: ', 'email'));
+
+
+$submitButton = new Submit('btnSave', 'Save');
+
+//add components to $form
+$form->addComponent([$nameField, $emailField, $submitButton]);
+
+//display form
+echo $form->display();
+```
+
+Output
+
+```html
+<label for="name">Name: </label>
+<input type="text" name="name" value="">
+<span style="color: red">The name field is required.</span>
+
+<label for="email">Email: </label>
+<input type="email" name="email" value="">
+<span style="color: red">The email field must contain a valid email address.</span>
 ```

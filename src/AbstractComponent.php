@@ -1,8 +1,6 @@
 <?php
 
-namespace App\FormBuilder;
-
-use App\FormBuilder\Template;
+namespace FormBuilder;
 
 abstract class AbstractComponent
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace FormBuilder;
+namespace CI4FormBuilder;
 
 class Dropdown extends AbstractComponent
 {

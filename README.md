@@ -14,16 +14,16 @@ Library to build and manage forms in a CodeIgniter 4 projects (Object-Oriented w
 
 ## Instalation & Loading
 
-CI4FormBuilder is available on [Packagist](https://packagist.org/packages/rafaelwendel/ci4formbuilder), and instalation via [Composer](https://getcomposer.org) is the recommended way to install it. Add the follow line to your `composer.json` file:
+CI4FormBuilder is available on [Packagist](https://packagist.org/packages/rafaelwendel/CI4FormBuilder), and instalation via [Composer](https://getcomposer.org) is the recommended way to install it. Add the follow line to your `composer.json` file:
 
 ```json
-"rafaelwendel/ci4formbuilder" : "^0.0.1"
+"rafaelwendel/CI4FormBuilder" : "^0.0.1"
 ```
 
 or run
 
 ```sh
-composer require rafaelwendel/ci4formbuilder
+composer require rafaelwendel/CI4FormBuilder
 ```
 
 ## Components

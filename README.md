@@ -186,6 +186,19 @@ With the `Template` class it is possible to define a default layout for a Form a
 - `afterComponent` : code to insert after each component
 - `beforeErrorMessage` : code to insert before a component error message (like validation) 
 - `afterErrorMessage` : code to insert after a component error message
+- `buttonExtra` : extra attributes (`class`, `id`, `onclick`, etc.) to buttons (can use array, object or string)
+- `checkboxExtra` : extra attributes to checkboxes
+- `dropdownExtra` : extra attributes to dropdowns
+- `hiddenExtra` : extra attributes to hiddens
+- `inputExtra` : extra attributes to inputs
+- `labelExtra` : extra attributes to labels
+- `multiselectExtra` : extra attributes to multiselects
+- `passwordExtra` : extra attributes to passwords
+- `radioExtra` : extra attributes to radios
+- `resetExtra` : extra attributes to resets
+- `submitExtra` : extra attributes to submits
+- `textareaExtra` : extra attributes to textareas
+- `uploadExtra` : extra attributes to uploads
 
 Example
 
@@ -213,6 +226,8 @@ class Home extends BaseController
             'afterForm' => '</div>',
             'beforeComponent' => '<div class="form-field">',
             'afterComponent' => '</div>',
+            'inputExtra' => 'class="form-input"', //pass extra in a string
+            'submitExtra' => ['id' => 'btnLogin', 'class' => 'btn'], //pass extra in an array 
         ]);
 
         //define the Form template
@@ -245,7 +260,7 @@ Output:
 
         <div class="form-field">
             <label for="username">Username: </label>
-            <input type="text" name="username" value="">
+            <input type="text" name="username" value="" class="form-input">
         </div>
 
         <div class="form-field">
@@ -254,7 +269,7 @@ Output:
         </div>
 
         <div class="form-field">
-            <input type="submit" name="btnLogin" value="Login">
+            <input type="submit" name="btnLogin" value="Login" id="btnLogin" class="btn">
         </div>
     </form>
 </div>

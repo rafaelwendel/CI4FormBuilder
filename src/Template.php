@@ -11,6 +11,19 @@ class Template
         'afterComponent',
         'beforeErrorMessage',
         'afterErrorMessage',
+        'buttonExtra',
+        'checkboxExtra',
+        'dropdownExtra',
+        'hiddenExtra',
+        'inputExtra',
+        'labelExtra',
+        'multiselectExtra',
+        'passwordExtra',
+        'radioExtra',
+        'resetExtra',
+        'submitExtra',
+        'textareaExtra',
+        'uploadExtra',
     ];
 
     private $options = [];

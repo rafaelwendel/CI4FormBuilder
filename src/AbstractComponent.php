@@ -169,9 +169,13 @@ abstract class AbstractComponent
     protected function checkExtraParam($check) 
     {
         if($check === 'extra' || $check === 'attributes') {
-            $this->params[$check] = ($this->params[$check] === '' && isset($this->template->has($this->extraKey)))
+            $defaultValue = ($check === 'extra')
+                            ? ''
+                            : [];
+
+            $this->params[$check] = ($this->params[$check] === '' && $this->template->has($this->extraKey))
                                  ? $this->template->get($this->extraKey)
-                                 : '';
+                                 : $defaultValue;
         }
     }
 
@@ -183,7 +187,9 @@ abstract class AbstractComponent
     public function display()
     {        
         //if there is no extra/attributes param defined, search in the Template object
-        $this->checkExtraParam('extra');
+        if(! $this instanceof Hidden) {
+            $this->checkExtraParam('extra');
+        }        
 
         $this->output .= "\n";
         $this->output .= "\t" . $this->addTemplatePart('beforeComponent');

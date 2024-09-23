@@ -8,6 +8,7 @@ abstract class AbstractComponent
     private $template = null;
     protected $name;
     protected $params;
+    protected $extraKey; //the key of component on the Template object
     protected $errorValidationMessage = null;
     protected $hasBeforeAndAfterComponent = true;
     protected $output;
@@ -167,6 +168,15 @@ abstract class AbstractComponent
      */
     public function display()
     {
+        $check = ($this instanceof Label)
+                 ? 'attributes'
+                 : 'extra'; 
+        
+        //if there is no extra/attributes param defined, search in the Template object
+        $this->params['extra'] = ($this->params[$check] === '' && isset($this->template->has($this->extraKey)))
+                                 ? $this->template->get($this->extraKey)
+                                 : '';
+
         $this->output .= "\n";
         $this->output .= "\t" . $this->addTemplatePart('beforeComponent');
         $this->output .= ($this->getLabel())

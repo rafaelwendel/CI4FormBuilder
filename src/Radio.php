@@ -7,6 +7,8 @@ class Radio extends AbstractComponent
     public function __construct($data = '', string $value = '', bool $checked = false, $extra = '')
     {
         parent::__construct();
+        $this->extraKey = 'radioExtra';
+
         $this->name = (is_array($data))
                       ? $data['name']
                       : $data;

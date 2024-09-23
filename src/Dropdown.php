@@ -7,6 +7,8 @@ class Dropdown extends AbstractComponent
     public function __construct($data = '', $options = [], $selected = [], $extra = '')
     {
         parent::__construct();
+        $this->extraKey = 'dropdownExtra';
+
         $this->name = (is_array($data))
                       ? $data['name']
                       : $data;

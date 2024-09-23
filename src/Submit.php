@@ -7,6 +7,8 @@ class Submit extends AbstractComponent
     public function __construct($data = '', string $value = '', $extra = '')
     {
         parent::__construct();
+        $this->extraKey = 'submitExtra';
+
         $this->name = (is_array($data))
                       ? $data['name']
                       : $data;

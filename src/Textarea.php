@@ -7,6 +7,8 @@ class Textarea extends AbstractComponent
     public function __construct($data = '', string $value = '', $extra = '')
     {
         parent::__construct();
+        $this->extraKey = 'textareaExtra';
+
         $this->name = (is_array($data))
                       ? $data['name']
                       : $data;

@@ -7,6 +7,8 @@ class Input extends AbstractComponent
     public function __construct($data = '', string $value = '', $extra = '', string $type = 'text')
     {
         parent::__construct();
+        $this->extraKey = 'inputExtra';
+
         $this->name = (is_array($data))
                       ? $data['name']
                       : $data;

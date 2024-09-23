@@ -7,6 +7,8 @@ class Reset extends AbstractComponent
     public function __construct($data = '', string $value = '', $extra = '')
     {
         parent::__construct();
+        $this->extraKey = 'resetExtra';
+
         $this->name = (is_array($data))
                       ? $data['name']
                       : $data;

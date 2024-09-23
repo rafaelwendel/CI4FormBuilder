@@ -7,6 +7,8 @@ class Multiselect extends AbstractComponent
     public function __construct($data = '', $options = [], $selected = [], $extra = '')
     {
         parent::__construct();
+        $this->extraKey = 'multiselectExtra';
+
         $this->name = (is_array($data))
                       ? $data['name']
                       : $data;

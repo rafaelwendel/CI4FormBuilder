@@ -7,6 +7,8 @@ class Label extends AbstractComponent
     public function __construct(string $labelText = '', string $id = '', array $attributes = [])
     {
         parent::__construct();
+        $this->extraKey = 'labelExtra';
+
         $this->params = [
             'labelText'  => $labelText,
             'id'         => $id,

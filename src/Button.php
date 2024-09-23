@@ -7,9 +7,12 @@ class Button extends AbstractComponent
     public function __construct($data = '', string $content = '', $extra = '')
     {
         parent::__construct();
+        $this->extraKey = 'buttonExtra';
+        
         $this->name = (is_array($data))
                       ? $data['name']
                       : $data;
+
         $this->params = [
             'data'    => $data,
             'content' => $content,

@@ -167,15 +167,23 @@ abstract class AbstractComponent
      * @return void
      */
     protected function checkExtraParam($check) 
-    {
+    {  
         if($check === 'extra' || $check === 'attributes') {
-            $defaultValue = ($check === 'extra')
+            //if extra was defined
+            $this->params[$check] = ($this->params[$check] !== '')
+                                 ? $this->params[$check]
+                                 : null;
+
+            //else check if has a Template extra defined
+            if(is_null($this->params[$check])) {
+                $defaultValue = ($check === 'extra')
                             ? ''
                             : [];
 
-            $this->params[$check] = ($this->params[$check] === '' && $this->template->has($this->extraKey))
-                                 ? $this->template->get($this->extraKey)
-                                 : $defaultValue;
+                $this->params[$check] = ($this->template->has($this->extraKey))
+                                        ? $this->template->get($this->extraKey)
+                                        : $defaultValue;
+            }
         }
     }
 

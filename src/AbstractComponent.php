@@ -162,20 +162,28 @@ abstract class AbstractComponent
     }
 
     /**
+     * If there is no extra/attributes param defined, search in the Template object
+     * @access protected
+     * @return void
+     */
+    protected function checkExtraParam($check) 
+    {
+        if($check === 'extra' || $check === 'attributes') {
+            $this->params[$check] = ($this->params[$check] === '' && isset($this->template->has($this->extraKey)))
+                                 ? $this->template->get($this->extraKey)
+                                 : '';
+        }
+    }
+
+    /**
      * Returns the component code to be displayed at form (with template and error message validation)
      * @access public
      * @return string
      */
     public function display()
-    {
-        $check = ($this instanceof Label)
-                 ? 'attributes'
-                 : 'extra'; 
-        
+    {        
         //if there is no extra/attributes param defined, search in the Template object
-        $this->params['extra'] = ($this->params[$check] === '' && isset($this->template->has($this->extraKey)))
-                                 ? $this->template->get($this->extraKey)
-                                 : '';
+        $this->checkExtraParam('extra');
 
         $this->output .= "\n";
         $this->output .= "\t" . $this->addTemplatePart('beforeComponent');

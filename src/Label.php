@@ -35,6 +35,7 @@ class Label extends AbstractComponent
      */
     public function display()
     {
+        $this->checkExtraParam('attributes');
         return "\t\t" . $this->outputComponent();
     }
 }

@@ -6,6 +6,6 @@
 
 - The option to create default (extra) templates for each form component has been added. This definition is made in the Template object options. The option consists of the component name concatenated with the Extra suffix (e.g. `inputExtra`, `dropdownExtra`, `submitExtra`, ...). Usage example: 
 ```php
-$formTemplate['inputExtra] = 'class="form-control"'; //string is available
+$formTemplate['inputExtra'] = 'class="form-control"'; //string is available
 $formTemplate['dropdownExtra'] = ['id' => 'myComp']; //array too =)
 ```

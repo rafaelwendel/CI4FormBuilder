@@ -11,6 +11,7 @@ Library to build and manage forms in a CodeIgniter 4 projects (Object-Oriented w
     - [Using a Template](#using-a-template)
     - [Setting Form Data](#setting-form-data)
     - [Setting Error Messages](#setting-error-messages)
+    - [Bonus: Form Types](#form-types)
 
 ## Instalation & Loading
 
@@ -388,4 +389,109 @@ Output
 <label for="email">Email: </label>
 <input type="email" name="email" value="">
 <span style="color: red">The email field must contain a valid email address.</span>
+```
+
+### Bonus: Form Types
+
+The `FormTypeAbstract` class provides a standard structure for creating `types` (objects) related to the form that will be created.
+
+For example, let's implement a product form with `name` and `price` fields. To do this, we will create the `ProductType` (extending `FormTypeAbstract`) class in the `App/FormType` folder. (Note: we must implement the abstract `setComponents` method defined in the `FormTypeAbstract` class)
+
+```php
+<?php
+
+namespace App\FormType;
+
+use CI4FormBuilder\FormTypeAbstract
+use CI4FormBuilder\Hidden;
+use CI4FormBuilder\Input;
+use CI4FormBuilder\Label;
+use CI4FormBuilder\Submit;
+
+class ProductType extends FormTypeAbstract
+{
+    //implement the abastract method defined on super
+    protected function setComponents()
+    {
+        $hiddenId = new Hidden('id');
+
+        $inputName = new Input('name');
+        $inputName->setLabel(new Label('Name: ', 'name'));
+
+        $inputPrice = new Input('price');
+        $inputPrice->setLabel(new Label('Price: ', 'price'));
+
+        $submitButton = new Submit('btnSave', $this->getSubmitLabel());
+
+        $this->addComponent([$hiddenId, $inputName, $inputPrice, $submitButton]);
+    }
+}
+```
+
+We will use this `ProductType` in the `Products` controller
+
+```php
+<?php
+
+namespace App\Controllers;
+
+use App\FormType\ProductType;
+
+class Products extends BaseController
+{
+    /* ... 
+        construct and others methods 
+       ... 
+    */
+
+    public function add()
+    {
+        $productType = new ProductType();
+        //set the submit label
+        $productType->setSubmitLabel('Save');
+
+        $data['form'] = $productType->display();
+
+        return view('products_form', $data);
+    }
+}
+```
+
+Same type for edit action
+
+```php
+
+    public function edit($id)
+    {
+        $product = model('ProductModel')->find($id);
+
+        $productType = new ProductType();
+        //set the submit label
+        $productType->setSubmitLabel('Edit/Update');
+        //set data
+        $productType->setFormData($product);
+
+        $data['form'] = $productType;
+
+        return view('products_form', $data);
+    }
+```
+
+Finally, in the type constructor it is possible to pass the template option (discussed in [Using a Template](#using-a-template)) and the submit label.
+
+```php
+
+    $templateOptions = [
+        'beforeForm'         => '<div class="form">',
+        'afterForm'          => '</div>',
+        'beforeComponent'    => '<div class="mb-3">',
+        'afterComponent'     => '</div>',
+        'inputExtra'         => 'class="form-control"',
+        'labelExtra'         => ['class' => 'form-label'],
+        'submitExtra'        => ['class' => 'btn btn-primary', 'id' => 'btn_save'],
+        /* Other options .... */
+    ];
+    $submitLabel = 'Save'; //Or Edit, Update, ....
+
+    $productType = new ProductType(templateOptions, $submitLabel);
 ```

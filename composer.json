@@ -2,7 +2,7 @@
     "name": "rafaelwendel/ci4formbuilder",
     "description" : "Library to build and manage forms in a CodeIgniter 4 projects (Object-Oriented way).",
     "keywords": ["codeigniter4", "php", "form", "builder"],
-    "version" : "0.0.2",
+    "version" : "0.0.3",
     "type": "library",
     "homepage": "https://github.com/rafaelwendel/CI4FormBuilder",
     "license": "MIT",

@@ -493,5 +493,5 @@ Finally, in the type constructor it is possible to pass the template option (dis
     ];
     $submitLabel = 'Save'; //Or Edit, Update, ....
 
-    $productType = new ProductType(templateOptions, $submitLabel);
+    $productType = new ProductType($templateOptions, $submitLabel);
 ```

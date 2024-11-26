@@ -402,7 +402,7 @@ For example, let's implement a product form with `name` and `price` fields. To d
 
 namespace App\FormType;
 
-use CI4FormBuilder\FormTypeAbstract
+use CI4FormBuilder\FormTypeAbstract;
 use CI4FormBuilder\Hidden;
 use CI4FormBuilder\Input;
 use CI4FormBuilder\Label;

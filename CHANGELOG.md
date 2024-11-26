@@ -1,5 +1,11 @@
 # Changes in CI4FormBuilder
 
+## 0.0.3 - 2024-11-26
+
+### Added
+
+- Added `FormTypeAbstract` class, which allows the creation of forms as types, focusing at code organization and reuse
+
 ## 0.0.2 - 2024-09-23
 
 ### Added

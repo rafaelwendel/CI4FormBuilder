@@ -107,6 +107,17 @@ abstract class FormTypeAbstract
     }
 
     /**
+     * Set the errors validation to display in the form
+     * @access public
+     * @param array|object $errorsValidation An array containing validation errors
+     * @return void
+     */
+    public function setErrorsValidation($errorsValidation)
+    {
+        $this->form->setErrorsValidation($errorsValidation);
+    }
+
+    /**
      * Display/prints the form
      * @access public
      * @return string

@@ -1,5 +1,11 @@
 # Changes in CI4FormBuilder
 
+## 0.0.4 - 2026-05-01
+
+### Added
+
+- Added `setErrorsValidation` method in `FormTypeAbstract` class
+
 ## 0.0.3 - 2024-11-26
 
 ### Added

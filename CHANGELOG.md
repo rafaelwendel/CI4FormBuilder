@@ -1,5 +1,13 @@
 # Changes in CI4FormBuilder
 
+## 0.0.5 - 2026-06-16
+
+### Added
+
+- Added `FormTypeGenerator` class, which allows the creation of FormType classes using the Spark CLI command
+- Added `make:formtype` command to generate FormType classes
+- Added `Form` param (with default value) in `FormTypeAbstract` class constructor to allow injecting the form object
+
 ## 0.0.4 - 2026-05-01
 
 ### Added

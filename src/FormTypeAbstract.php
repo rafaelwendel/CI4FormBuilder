@@ -13,12 +13,13 @@ abstract class FormTypeAbstract
      * @access public
      * @param array  $templateOptions an array with Template available options
      * @param string $submitLabel the label of form submit button
+     * @param Form|null $form a Form instance
      * @return void
      */
-    public function __construct($templateOptions = [], $submitLabel = 'Save')
+    public function __construct($templateOptions = [], $submitLabel = 'Save', ?Form $form = null)
     {
         $this->template = new Template($templateOptions);
-        $this->form = new Form();
+        $this->form = $form ?? new Form();
         $this->form->setTemplate($this->template);
         $this->submitLabel = $submitLabel;
     }

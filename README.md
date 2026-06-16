@@ -395,12 +395,26 @@ Output
 
 The `FormTypeAbstract` class provides a standard structure for creating `types` (objects) related to the form that will be created.
 
-For example, let's implement a product form with `name` and `price` fields. To do this, we will create the `ProductType` (extending `FormTypeAbstract`) class in the `App/FormType` folder. (Note: we must implement the abstract `setComponents` method defined in the `FormTypeAbstract` class)
+To make the creation of these classes easier, you can generate a `FormType` class using the Spark CLI command provided by this library:
+
+```sh
+php spark make:formtype <name>
+```
+
+For example, to create a product form type, run:
+
+```sh
+php spark make:formtype Product
+```
+
+This command will automatically create the `ProductType` class in the `app/FormTypes` folder, extending `FormTypeAbstract` and containing the template structure.
+
+For example, let's implement a product form with `name` and `price` fields. To do this, we will create the `ProductType` (extending `FormTypeAbstract`) class in the `app/FormTypes` folder (either manually or using the generator command above). (Note: we must implement the abstract `setComponents` method defined in the `FormTypeAbstract` class)
 
 ```php
 <?php
 
-namespace App\FormType;
+namespace App\FormTypes;
 
 use CI4FormBuilder\FormTypeAbstract;
 use CI4FormBuilder\Hidden;
@@ -435,7 +449,7 @@ We will use this `ProductType` in the `Products` controller
 
 namespace App\Controllers;
 
-use App\FormType\ProductType;
+use App\FormTypes\ProductType;
 
 class Products extends BaseController
 {
